@@ -1,0 +1,8 @@
+{
+    "GCLOUD_PROJECT": "",
+    "DATA_BACKEND": "mongodb",
+    "MONGO_URL": "mongodb://AdminIshowyout:Holamundo123@ds129143.mlab.com:29143/ishowyou?authSource=ishowyou",
+    "MONGO_COLLECTION": "examen",
+    "PORT":3000,
+    "SECRETO":"12345"
+  }
