@@ -29,8 +29,10 @@ app.get('/', function (req, res) {
 })
 app.post('/login', function (req,res) {
     //res.send('hola. entraste a login')
+    
     usuarios.find({email:req.body.email},function (err, response) {
         if (err) console.log(err);
+    if(typeof response[0].contrasena != undefined){ 
         //varificamos el hash de la contraseña// para crear el password nuevo se usa //passwordHash.generate(req.body.password)
         if (passwordHash.verify(req.body.password, response[0].contrasena) === true) {
             //creamos el token tomando en cuenta la respuesta la llave asinada y podemos asignar tiempo de delay
@@ -42,7 +44,12 @@ app.post('/login', function (req,res) {
                 //enviamos un no localizado o no encontrado
               res.status(404).json({ mensage: 'Password Y/o Contraseña incorrecto', error: 401 })
             }
-        //res.json({response})
+          }else{
+                   res.status(301).json({
+                     msg:"error en la consulta",
+                     error :1
+                   })
+          } 
       })
   })
 //mandamos un Objeto X de a bae de datos para poder dar acceso al home de angular
@@ -60,7 +67,7 @@ app.post('/login', function (req,res) {
       })
   })
 //aqui colocamos la conexion a la base de datos
-  mongoose.connect(conf.MONGO_URL,{useMongoClient: true})
+  mongoose.connect(conf.MONGO_URL,{dbName: conf.DB})
     .then(() => {
         // Cuando se realiza la conexión marca OK
         console.log("Ok Database")
